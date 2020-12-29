@@ -1,0 +1,6 @@
+update_frequency : 30
+x_axis_time_window : 10
+source_position_ref : user
+source_velocity_ref : no
+source_attitude_ref : px4
+source_angular_velocity_ref : no

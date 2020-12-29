@@ -1,0 +1,49 @@
+#!/bin/bash
+
+rm -f ~/Simulation/simulator.sh
+cp "1. simulator.sh" ~/Simulation/simulator.sh
+
+rm -f ~/Simulation/gazebo.launch
+cp "2. gazebo.launch" ~/Simulation/gazebo.launch
+
+rm -f ~/Firmware/launch/drone.launch
+cp "3. drone.launch" ~/Firmware/launch/drone.launch
+
+rm -f ~/Firmware/Tools/sitl_gazebo/worlds/empty.world
+cp "4. empty.world" ~/Firmware/Tools/sitl_gazebo/worlds/empty.world
+
+rm -f ~/Firmware/ROMFS/px4fmu_common/init.d-posix/px4_config
+cp "5. px4_config" ~/Firmware/ROMFS/px4fmu_common/init.d-posix/px4_config
+
+rm -f ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_red.xacro
+cp "6. iris_red.xacro" ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_red.xacro
+
+rm -f ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_red_base.xacro
+cp "7. iris_red_base.xacro" ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_red_base.xacro
+
+rm -f ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_black.xacro
+cp "8. iris_black.xacro" ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_black.xacro
+
+rm -f ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_black_base.xacro
+cp "9. iris_black_base.xacro" ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_black_base.xacro
+
+rm -f ~/Firmware/ROMFS/px4fmu_common/init.d-posix/px4_config_light
+cp "10. px4_config_light" ~/Firmware/ROMFS/px4fmu_common/init.d-posix/px4_config_light
+
+rm -f ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_light.xacro
+cp "11. iris_light.xacro" ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_light.xacro
+
+rm -f ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_light_base.xacro
+cp "12. iris_light_base.xacro" ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_light_base.xacro
+
+rm -f ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_vis_tool.xacro
+cp "13. iris_vis_tool.xacro" ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_vis_tool.xacro
+
+rm -f ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_vis_tool_base.xacro
+cp "14. iris_vis_tool_base.xacro" ~/Firmware/Tools/sitl_gazebo/models/rotors_description/urdf/iris_vis_tool_base.xacro
+
+rm -f ~/catkin_ws_python/src/mocap/src/mocap_emulator.py
+cp "15. mocap_emulator.py" ~/catkin_ws_python/src/mocap/src/mocap_emulator.py
+
+rm -f ~/catkin_ws_python/src/mocap/src/mocap_config.yaml
+cp "16. mocap_config.yaml" ~/catkin_ws_python/src/mocap/src/mocap_config.yaml

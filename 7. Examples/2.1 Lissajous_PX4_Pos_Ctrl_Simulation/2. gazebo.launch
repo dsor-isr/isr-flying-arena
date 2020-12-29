@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- LAUNCH GAZEBO: CHOOSE WHETHER OR NOT TO LAUNCH THE GRAPHICAL INTERFACE. SELECT THE WORLD. -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="gui" value="true"/>
+        <arg name="world_name" value="$(find mavlink_sitl_gazebo)/worlds/empty.world"/>
+    </include>
+
+
+    <!-- LAUNCH AN UAV: ASSIGN A UNIQUE NAMESPACE. CHOOSE THE VEHICLE INITIAL POSITION AND INITIAL ATTITUDE. ASSIGN A UNIQUE ID FOR THE DRONE AND ITS PX4. ASSIGN A UNIQUE PORT. SELECT THE VEHICLE MODEL. STATE THE FILE WITH THE DESIRED INTERNAL CONFIGURATIONS FOR THE PX4. IF YOU WANT TO CONNECT TO THE DRONE FROM EXTERNAL COMPUTERS, INSERT THE IP ADDRESS OF THOSE COMPUTERS. -->
+    <group ns="uav1">
+        <include file="$(find px4)/launch/drone.launch">
+            <arg name="N" value="0"/>
+            <arg name="E" value="0"/>
+            <arg name="D" value="0"/>
+		  <arg name="r" value="0"/>
+            <arg name="p" value="0"/>
+            <arg name="y" value="0"/>
+            <arg name="ID" value="1"/>
+            <arg name="port" value="16001"/>	
+            <arg name="vehicle" value="iris_black"/>
+            <arg name="px4_config" value="px4_config"/>
+            <arg name="gcs_1_url" value="192.168.1.21"/>
+            <arg name="gcs_2_url" value="192.168.1.22"/>
+        </include>
+    </group>
+
+</launch>

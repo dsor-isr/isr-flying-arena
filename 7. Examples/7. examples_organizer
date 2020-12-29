@@ -1,0 +1,55 @@
+#!/bin/bash
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/position_setpoints.py
+cp "1.1 Position Setpoints Simulation/3. position_setpoints_mavros_python.py" ~/catkin_ws_python/src/offboard_programs/src/position_setpoints.py
+
+rm -f ~/catkin_ws/src/position_setpoints/src/position_setpoints_node.cpp
+cp "1.1 Position Setpoints Simulation/5. position_setpoints_mavros_c++.cpp" ~/catkin_ws/src/position_setpoints/src/position_setpoints_node.cpp
+
+rm -f ~/catkin_ws/src/position_setpoints/CMakeLists.txt
+cp "1.1 Position Setpoints Simulation/6. CMakeLists.txt" ~/catkin_ws/src/position_setpoints/CMakeLists.txt
+
+rm -f ~/MAVSDK-PYTHON/position_setpoints.py
+cp "1.1 Position Setpoints Simulation/8. position_setpoints_mavsdk_python.py" ~/MAVSDK-PYTHON/position_setpoints.py
+
+rm -f ~/MAVSDK-C++/position_setpoints.cpp
+cp "1.1 Position Setpoints Simulation/10. position_setpoints_mavsdk_c++.cpp" ~/MAVSDK-C++/position_setpoints.cpp
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/lissajous_px4_pos_ctrl.py
+cp "2.1 Lissajous_PX4_Pos_Ctrl_Simulation/3. lissajous_px4_pos_ctrl_mavros_python.py" ~/catkin_ws_python/src/offboard_programs/src/lissajous_px4_pos_ctrl.py
+
+rm -f ~/catkin_ws/src/lissajous_px4_pos_ctrl/src/lissajous_px4_pos_ctrl_node.cpp
+cp "2.1 Lissajous_PX4_Pos_Ctrl_Simulation/5. lissajous_px4_pos_ctrl_mavros_c++.cpp" ~/catkin_ws/src/lissajous_px4_pos_ctrl/src/lissajous_px4_pos_ctrl_node.cpp
+
+rm -f ~/catkin_ws/src/lissajous_px4_pos_ctrl/CMakeLists.txt
+cp "2.1 Lissajous_PX4_Pos_Ctrl_Simulation/6. CMakeLists.txt" ~/catkin_ws/src/lissajous_px4_pos_ctrl/CMakeLists.txt
+
+rm -f ~/MAVSDK-PYTHON/lissajous_px4_pos_ctrl.py
+cp "2.1 Lissajous_PX4_Pos_Ctrl_Simulation/8. lissajous_px4_pos_ctrl_mavsdk_python.py" ~/MAVSDK-PYTHON/lissajous_px4_pos_ctrl.py
+
+rm -f ~/MAVSDK-C++/lissajous_px4_pos_ctrl.cpp
+cp "2.1 Lissajous_PX4_Pos_Ctrl_Simulation/10. lissajous_px4_pos_ctrl_mavsdk_c++.cpp" ~/MAVSDK-C++/lissajous_px4_pos_ctrl.cpp
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/lissajous_att_ctrl.py
+cp "3.1 Lissajous_Att_Ctrl_Simulation/3. lissajous_att_ctrl_mavros_python.py" ~/catkin_ws_python/src/offboard_programs/src/lissajous_att_ctrl.py
+
+rm -f ~/catkin_ws/src/lissajous_att_ctrl/src/lissajous_att_ctrl_node.cpp
+cp "3.1 Lissajous_Att_Ctrl_Simulation/5. lissajous_att_ctrl_mavros_c++.cpp" ~/catkin_ws/src/lissajous_att_ctrl/src/lissajous_att_ctrl_node.cpp
+
+rm -f ~/catkin_ws/src/lissajous_att_ctrl/CMakeLists.txt
+cp "3.1 Lissajous_Att_Ctrl_Simulation/6. CMakeLists.txt" ~/catkin_ws/src/lissajous_att_ctrl/CMakeLists.txt
+
+rm -f ~/MAVSDK-PYTHON/lissajous_att_ctrl.py
+cp "3.1 Lissajous_Att_Ctrl_Simulation/8. lissajous_att_ctrl_mavsdk_python.py" ~/MAVSDK-PYTHON/lissajous_att_ctrl.py
+
+rm -f ~/MAVSDK-C++/lissajous_att_ctrl.cpp
+cp "3.1 Lissajous_Att_Ctrl_Simulation/10. lissajous_att_ctrl_mavsdk_c++.cpp" ~/MAVSDK-C++/lissajous_att_ctrl.cpp
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/nav_system.py
+cp "4. Navigation System/3. nav_system.py" ~/catkin_ws_python/src/offboard_programs/src/nav_system.py
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/leader.py
+cp "5.1 Formation Control Simulation/3. leader.py" ~/catkin_ws_python/src/offboard_programs/src/leader.py
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/follower.py
+cp "5.1 Formation Control Simulation/4. follower.py" ~/catkin_ws_python/src/offboard_programs/src/follower.py

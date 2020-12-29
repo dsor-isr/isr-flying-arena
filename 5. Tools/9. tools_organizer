@@ -1,0 +1,55 @@
+#!/bin/bash
+
+rm -f ~/catkin_ws_python/src/tools/src/rel_pos_vel_emu_sensor.py
+cp "1. Emulated Sensors/1. rel_pos_vel_emu_sensor.py" ~/catkin_ws_python/src/tools/src/rel_pos_vel_emu_sensor.py
+
+rm -f ~/catkin_ws_python/src/tools/src/rel_pos_vel_emu_sensor.yaml
+cp "1. Emulated Sensors/2. rel_pos_vel_emu_sensor.yaml" ~/catkin_ws_python/src/tools/src/rel_pos_vel_emu_sensor.yaml
+
+rm -f ~/catkin_ws_python/src/tools/src/offboard_logger.py
+cp "2. Offboard Logger/1. offboard_logger.py" ~/catkin_ws_python/src/tools/src/offboard_logger.py
+
+rm -f ~/catkin_ws_python/src/tools/src/offboard_logger.yaml
+cp "2. Offboard Logger/2. offboard_logger.yaml" ~/catkin_ws_python/src/tools/src/offboard_logger.yaml
+
+rm -f ~/catkin_ws_python/src/tools/src/real_time_monitor.py
+cp "3. Real Time Monitoring/1. real_time_monitor.py" ~/catkin_ws_python/src/tools/src/real_time_monitor.py
+
+rm -f ~/catkin_ws_python/src/tools/src/real_time_monitor.yaml
+cp "3. Real Time Monitoring/2. real_time_monitor.yaml" ~/catkin_ws_python/src/tools/src/real_time_monitor.yaml
+
+rm -f ~/catkin_ws_python/src/tools/src/visualization_tool.py
+cp "4. Python Live Visualization Tool/1. visualization_tool.py" ~/catkin_ws_python/src/tools/src/visualization_tool.py
+
+rm -f ~/catkin_ws_python/src/tools/src/visualization_tool.yaml
+cp "4. Python Live Visualization Tool/2. visualization_tool.yaml" ~/catkin_ws_python/src/tools/src/visualization_tool.yaml
+
+rm -f ~/catkin_ws_python/src/tools/src/gazebo_live_vis_tool.py
+cp "5. Gazebo Live Visualization Tool/1. gazebo_live_vis_tool.py" ~/catkin_ws_python/src/tools/src/gazebo_live_vis_tool.py
+
+rm -f ~/catkin_ws_python/src/tools/src/gazebo_live_vis_tool.yaml
+cp "5. Gazebo Live Visualization Tool/2. gazebo_live_vis_tool.yaml" ~/catkin_ws_python/src/tools/src/gazebo_live_vis_tool.yaml
+
+rm -f ~/catkin_ws_python/src/tools/src/matlab_logs_visualization_tool.m
+cp "6. Matlab Logs Visualization Tool/1. matlab_logs_visualization_tool.m" ~/catkin_ws_python/src/tools/src/matlab_logs_visualization_tool.m
+
+rm -f ~/catkin_ws_python/src/tools/src/2020_10_01_08h_48_uav1.csv
+cp "6. Matlab Logs Visualization Tool/2. 2020_10_01_08h_48_uav1.csv" ~/catkin_ws_python/src/tools/src/2020_10_01_08h_48_uav1.csv
+
+rm -f ~/catkin_ws_python/src/tools/src/2020_10_01_08h_48_uav2.csv
+cp "6. Matlab Logs Visualization Tool/3. 2020_10_01_08h_48_uav2.csv" ~/catkin_ws_python/src/tools/src/2020_10_01_08h_48_uav2.csv
+
+rm -f ~/catkin_ws_python/src/tools/src/gazebo_logs_vis_tool.py
+cp "7. Gazebo Logs Visualization Tool/1. gazebo_logs_vis_tool.py" ~/catkin_ws_python/src/tools/src/gazebo_logs_vis_tool.py
+
+rm -f ~/catkin_ws_python/src/tools/src/gazebo_logs_vis_tool.yaml
+cp "7. Gazebo Logs Visualization Tool/2. gazebo_logs_vis_tool.yaml" ~/catkin_ws_python/src/tools/src/gazebo_logs_vis_tool.yaml
+
+rm -f ~/catkin_ws_python/src/tools/src/run_gazebo_logs_vis_tool
+cp "7. Gazebo Logs Visualization Tool/3. run_gazebo_logs_vis_tool" ~/catkin_ws_python/src/tools/src/run_gazebo_logs_vis_tool
+
+rm -f ~/catkin_ws_python/src/tools/src/2020_10_06_11h_02_uav2.csv
+cp "7. Gazebo Logs Visualization Tool/4. 2020_10_06_11h_02_uav2.csv" ~/catkin_ws_python/src/tools/src/2020_10_06_11h_02_uav2.csv
+
+rm -f ~/catkin_ws_python/src/tools/src/2020_10_06_11h_02_uav3.csv
+cp "7. Gazebo Logs Visualization Tool/5. 2020_10_06_11h_02_uav3.csv" ~/catkin_ws_python/src/tools/src/2020_10_06_11h_02_uav3.csv

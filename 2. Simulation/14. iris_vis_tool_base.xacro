@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<robot name="iris_vis_tool" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Properties that can be assigned at build time as arguments. -->
+  <xacro:arg name='name' default='iris_vis_tool' />
+  <xacro:arg name='mavlink_addr' default='INADDR_ANY' />
+  <xacro:arg name='mavlink_udp_port' default='14560' />
+  <xacro:arg name='mavlink_tcp_port' default='4560' />
+  <xacro:arg name='serial_enabled' default='false' />
+  <xacro:arg name='serial_device' default='/dev/ttyACM0' />
+  <xacro:arg name='baudrate' default='921600' />
+  <xacro:arg name='qgc_addr' default='INADDR_ANY' />
+  <xacro:arg name='qgc_udp_port' default='14550' />
+  <xacro:arg name='sdk_addr' default='INADDR_ANY' />
+  <xacro:arg name='sdk_udp_port' default='14540' />
+  <xacro:arg name='hil_mode' default='false' />
+  <xacro:arg name='hil_state_level' default='false' />
+  <xacro:arg name='send_vision_estimation' default='false' />
+  <xacro:arg name='send_odometry' default='false' />
+  <xacro:arg name='enable_lockstep' default='true' />
+  <xacro:arg name='use_tcp' default='true' />
+  <xacro:arg name='vehicle_is_tailsitter' default='false' />
+  <xacro:arg name='visual_material' default='DarkGrey' />
+  <xacro:arg name='enable_mavlink_interface' default='true' />
+  <xacro:arg name='enable_wind' default='false' />
+  <!-- The following causes segfault with multiple vehicles if defaults to true!!! -->
+  <xacro:arg name='enable_ground_truth' default='false' />
+  <xacro:arg name='enable_logging' default='false' />
+  <xacro:arg name='log_file' default='iris_vis_tool' />
+
+  <!-- Instantiate iris "mechanics" -->
+  <xacro:include filename="$(arg rotors_description_dir)/urdf/iris_vis_tool.xacro" />
+
+</robot>

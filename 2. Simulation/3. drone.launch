@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- VEHICLE CONFIGURATION -->
+    <arg name="N" default="0"/>
+    <arg name="E" default="0"/>
+    <arg name="D" default="0"/>
+    <arg name="-D" value="$(eval -1 * arg('ID'))"/>
+    <arg name="r" default="0"/>
+    <arg name="p" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="-y" value="$(eval -1 * arg('y'))"/>
+    <arg name="ID" default="1"/>
+    <env name="ID" value="$(arg ID)"/>
+    <arg name="tgt_system" default="$(arg ID)"/>
+    <arg name="port" default="16001"/>
+    <env name="PORT" value="$(arg port)"/>
+    <arg name="vehicle" default="iris_light"/>
+    <env name="PX4_SIM_MODEL" value="iris"/>
+    <env name="PX4_ESTIMATOR" value="ekf2"/>
+    <arg name="px4_config" default="px4_config_light"/>
+    <arg name="gcs_1_url" default=""/>
+    <arg name="gcs_2_url" default=""/>
+    <arg name="gcs_3_url" default=""/>
+    <arg name="gcs_4_url" default=""/>
+    <arg name="gcs_5_url" default=""/>
+    <env name="GCS_1_URL" value="$(arg gcs_1_url)"/>
+    <env name="GCS_2_URL" value="$(arg gcs_2_url)"/>
+    <env name="GCS_3_URL" value="$(arg gcs_3_url)"/>
+    <env name="GCS_4_URL" value="$(arg gcs_4_url)"/>
+    <env name="GCS_5_URL" value="$(arg gcs_5_url)"/>
+    <arg name="mavlink_udp_port" default="$(eval 14560 + arg('ID'))"/>
+    <arg name="mavlink_tcp_port" default="$(eval 4560 + arg('ID'))"/>
+
+
+    <!-- GENERATE URDF MODEL OF THE VEHICLE -->
+    <arg name="cmd" default="$(find xacro)/xacro $(find px4)/Tools/sitl_gazebo/models/rotors_description/urdf/$(arg vehicle)_base.xacro rotors_description_dir:=$(find px4)/Tools/sitl_gazebo/models/rotors_description mavlink_udp_port:=$(arg mavlink_udp_port) mavlink_tcp_port:=$(arg mavlink_tcp_port) --inorder"/>
+    <param command="$(arg cmd)" name="rotors_description"/>
+
+
+    <!-- START PX4 SITL INSTANCE -->
+    <arg name="px4_command_arg1" value="-d"/>
+    <node name="sitl_$(arg ID)" pkg="px4" type="px4" output="screen" args="$(find px4)/ROMFS/px4fmu_common -s etc/init.d-posix/$(arg px4_config) -i $(arg ID) -w sitl_$(arg vehicle)_$(arg ID) $(arg px4_command_arg1)">
+    </node>
+
+
+    <!-- SPAWN VEHICLE -->
+    <node name="$(arg vehicle)_$(arg ID)_spawn" output="screen" pkg="gazebo_ros" type="spawn_model" args="-urdf -param rotors_description -model $(arg vehicle)_$(arg ID) -package_to_model -x $(arg E) -y $(arg N) -z $(arg -D) -R $(arg p) -P $(arg r) -Y $(arg -y)"/>
+
+</launch>

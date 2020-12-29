@@ -1,0 +1,64 @@
+#!/bin/bash
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/uav_mavros.py
+cp "1. MAVROS - Python/1. uav_mavros.py" ~/catkin_ws_python/src/offboard_programs/src/uav_mavros.py
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/telemetry.py
+cp "1. MAVROS - Python/2. telemetry.py" ~/catkin_ws_python/src/offboard_programs/src/telemetry.py
+
+rm -f ~/catkin_ws_python/src/offboard_programs/src/offboard.py
+cp "1. MAVROS - Python/3. offboard.py" ~/catkin_ws_python/src/offboard_programs/src/offboard.py
+
+rm -f ~/catkin_ws_python/src/tools/src/uav_mavros.py
+cp "1. MAVROS - Python/1. uav_mavros.py" ~/catkin_ws_python/src/tools/src/uav_mavros.py
+
+rm -f ~/catkin_ws_python/src/tools/src/telemetry.py
+cp "1. MAVROS - Python/2. telemetry.py" ~/catkin_ws_python/src/tools/src/telemetry.py
+
+rm -f ~/catkin_ws_python/src/tools/src/offboard.py
+cp "1. MAVROS - Python/3. offboard.py" ~/catkin_ws_python/src/tools/src/offboard.py
+
+rm -f ~/catkin_ws/src/position_setpoints/src/uav_mavros.h
+cp "2. MAVROS - C++/1. uav_mavros.h" ~/catkin_ws/src/position_setpoints/src/uav_mavros.h
+
+rm -f ~/catkin_ws/src/position_setpoints/src/telemetry.cpp
+cp "2. MAVROS - C++/2. telemetry.cpp" ~/catkin_ws/src/position_setpoints/src/telemetry.cpp
+
+rm -f ~/catkin_ws/src/position_setpoints/src/offboard.cpp
+cp "2. MAVROS - C++/3. offboard.cpp" ~/catkin_ws/src/position_setpoints/src/offboard.cpp
+
+rm -f ~/catkin_ws/src/lissajous_px4_pos_ctrl/src/uav_mavros.h
+cp "2. MAVROS - C++/1. uav_mavros.h" ~/catkin_ws/src/lissajous_px4_pos_ctrl/src/uav_mavros.h
+
+rm -f ~/catkin_ws/src/lissajous_px4_pos_ctrl/src/telemetry.cpp
+cp "2. MAVROS - C++/2. telemetry.cpp" ~/catkin_ws/src/lissajous_px4_pos_ctrl/src/telemetry.cpp
+
+rm -f ~/catkin_ws/src/lissajous_px4_pos_ctrl/src/offboard.cpp
+cp "2. MAVROS - C++/3. offboard.cpp" ~/catkin_ws/src/lissajous_px4_pos_ctrl/src/offboard.cpp
+
+rm -f ~/catkin_ws/src/lissajous_att_ctrl/src/uav_mavros.h
+cp "2. MAVROS - C++/1. uav_mavros.h" ~/catkin_ws/src/lissajous_att_ctrl/src/uav_mavros.h
+
+rm -f ~/catkin_ws/src/lissajous_att_ctrl/src/telemetry.cpp
+cp "2. MAVROS - C++/2. telemetry.cpp" ~/catkin_ws/src/lissajous_att_ctrl/src/telemetry.cpp
+
+rm -f ~/catkin_ws/src/lissajous_att_ctrl/src/offboard.cpp
+cp "2. MAVROS - C++/3. offboard.cpp" ~/catkin_ws/src/lissajous_att_ctrl/src/offboard.cpp
+
+rm -f ~/MAVSDK-PYTHON/uav_mavsdk.py
+cp "3. MAVSDK - Python/1. uav_mavsdk.py" ~/MAVSDK-PYTHON/uav_mavsdk.py
+
+rm -f ~/MAVSDK-PYTHON/telemetry.py
+cp "3. MAVSDK - Python/2. telemetry.py" ~/MAVSDK-PYTHON/telemetry.py
+
+rm -f ~/MAVSDK-PYTHON/offboard.py
+cp "3. MAVSDK - Python/3. offboard.py" ~/MAVSDK-PYTHON/offboard.py
+
+rm -f ~/MAVSDK-C++/uav_mavsdk.h
+cp "4. MAVSDK - C++/1. uav_mavsdk.h" ~/MAVSDK-C++/uav_mavsdk.h
+
+rm -f ~/MAVSDK-C++/telemetry.cpp
+cp "4. MAVSDK - C++/2. telemetry.cpp" ~/MAVSDK-C++/telemetry.cpp
+
+rm -f ~/MAVSDK-C++/offboard.cpp
+cp "4. MAVSDK - C++/3. offboard.cpp" ~/MAVSDK-C++/offboard.cpp

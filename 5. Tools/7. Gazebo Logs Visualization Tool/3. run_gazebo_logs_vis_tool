@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source ~/catkin_ws_python/devel/setup.bash
+cd /home/tiago/catkin_ws_python/src/tools/src
+sleep 10
+rosrun tools gazebo_logs_vis_tool.py

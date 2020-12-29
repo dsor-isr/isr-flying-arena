@@ -1,0 +1,327 @@
+#!/bin/sh
+
+
+
+
+### PX4 COMMANDS NEED THE 'PX4-' PREFIX IN BASH.
+### (PX4-ALIAS.SH IS EXPECTED TO BE IN THE PATH)
+### SHELLCHECK DISABLE=SC1091
+. px4-alias.sh
+SCRIPT_DIR="$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)"
+
+
+
+
+### CHECK FOR EKF2 REPLAY
+### SHELLCHECK DISABLE=SC2154
+if [ "$replay_mode" = "ekf2" ]
+then
+	sh etc/init.d-posix/rc.replay
+	exit 0
+fi
+
+
+
+
+### INITIALIZE SCRIPT VARIABLES
+set AUX_MODE                    none
+set IO_PRESENT                  no
+set LOG_FILE                    bootlog.txt
+set MAV_TYPE                    none
+set MIXER                       none
+set MIXER_AUX                   none
+set MIXER_FILE                  none
+set OUTPUT_MODE                 sim
+set PWM_OUT                     none
+set SDCARD_MIXERS_PATH          etc/mixers
+set USE_IO                      no
+set VEHICLE_TYPE                none
+set LOGGER_BUF			       1000
+set RUN_MINIMAL_SHELL           no
+
+
+
+
+### USE THE VARIABLE SET BY SITL_RUN.SH TO CHOOSE THE MODEL SETTINGS.
+if [ "$PX4_SIM_MODEL" = "shell" ]; then
+	set RUN_MINIMAL_SHELL yes
+else
+	REQUESTED_AUTOSTART=$(ls "$SCRIPT_DIR" | sed -n 's/^\([0-9][0-9]*\)_'${PX4_SIM_MODEL}'$/\1/p')
+	if [ -z "$REQUESTED_AUTOSTART" ]; then
+		echo "Error: Unknown model '$PX4_SIM_MODEL'"
+		exit 1
+	fi
+fi
+
+
+
+
+### CLEAR BOOTLOG
+[ -f $LOG_FILE ] && rm $LOG_FILE
+
+
+
+
+### START UORB
+uorb start
+
+
+
+
+### LOAD PARAMETERS
+set PARAM_FILE eeprom/parameters_"$REQUESTED_AUTOSTART"
+param select $PARAM_FILE
+
+if [ -f $PARAM_FILE ]
+then
+	if param load
+	then
+		echo "[param] Loaded: $PARAM_FILE"
+	else
+		echo "[param] FAILED loading $PARAM_FILE"
+	fi
+else
+	echo "[param] parameter file not found, creating $PARAM_FILE"
+fi
+
+
+
+
+### EXIT EARLY WHEN THE MINIMAL SHELL IS REQUESTED
+[ $RUN_MINIMAL_SHELL = yes ] && exit 0
+
+
+
+
+### USE ENVIRONMENT VARIABLE PX4_ESTIMATOR TO CHOOSE ESTIMATOR.
+if   [ "$PX4_ESTIMATOR" = "q" ]; then
+	param set SYS_MC_EST_GROUP 3
+elif [ "$PX4_ESTIMATOR" = "ekf2" ]; then
+	param set SYS_MC_EST_GROUP 2
+elif [ "$PX4_ESTIMATOR" = "lpe" ]; then
+	param set SYS_MC_EST_GROUP 1
+elif [ "$PX4_ESTIMATOR" = "inav" ]; then
+	param set SYS_MC_EST_GROUP 0
+fi
+
+
+
+
+### WIPE OUT PARAMS EXCEPT RC*, FLIGHT MODES, TOTAL FLIGHT TIME, ACCEL CAL, GYRO CAL, NEXT FLIGHT UUID
+set AUTOCNF yes
+param set SYS_AUTOCONFIG 1
+
+if param compare SYS_AUTOCONFIG 1
+then
+	param reset_nostart RC* COM_FLTMODE* LND_FLIGHT_T_* TC_* CAL_ACC* CAL_GYRO* COM_FLIGHT_UUID
+fi
+
+
+
+
+### MULTI-INSTANCE SETUP
+### SHELLCHECK DISABLE=SC2154
+param set MAV_SYS_ID $ID
+simulator_tcp_port=$((4560+ID))
+udp_offboard_port_local=$((13000+ID))
+udp_offboard_port_remote=$((13500+ID))
+udp_qgc_port_local=$((14000+ID))
+SDK_PORT=$((6000+PORT))
+
+
+if [ $AUTOCNF = yes ]
+then
+	param set SYS_AUTOSTART $REQUESTED_AUTOSTART
+	param set BAT_N_CELLS 3
+	param set CAL_ACC0_ID 1311244
+	param set CAL_ACC_PRIME 1311244
+	param set CAL_GYRO0_ID 2294028
+	param set CAL_GYRO_PRIME 2294028
+	param set CAL_MAG0_ID 197388
+	param set CAL_MAG_PRIME 197388
+	param set CBRK_AIRSPD_CHK 0
+	param set COM_ARM_EKF_AB 0.005
+	param set COM_DISARM_LAND 0.1
+	param set COM_DL_LOSS_T 5
+	param set COM_LOW_BAT_ACT 2
+	param set COM_OBL_ACT 2
+	param set COM_OBL_RC_ACT 0
+	param set COM_OF_LOSS_T 5
+	param set COM_RC_IN_MODE 1
+	param set EKF2_AID_MASK 24
+	param set EKF2_EV_DELAY 10.0
+	param set EKF2_ANGERR_INIT 0.01
+	param set EKF2_HGT_MODE 3
+	param set EKF2_GBIAS_INIT 0.01
+	param set EKF2_REQ_GPS_H 0.5
+	param set LPE_FUSION 145
+	param set MAV_BROADCAST 1
+	param set MC_PITCH_P 6
+	param set MC_PITCHRATE_P 0.2
+	param set MC_ROLL_P 6
+	param set MC_ROLLRATE_P 0.2
+	param set MPC_ALT_MODE 0
+	param set MPC_HOLD_MAX_Z 2
+	param set MPC_Z_VEL_I 0.15
+	param set MPC_Z_VEL_P 0.6
+	param set MPC_XY_P 0.8
+	param set MPC_XY_VEL_P 0.2
+	param set MPC_XY_VEL_I 0.02
+	param set MPC_XY_VEL_D 0.016
+	param set MPC_JERK_MIN 10
+	param set MPC_JERK_MAX 20
+	param set MPC_ACC_HOR_MAX 3
+	param set NAV_ACC_RAD 2
+	param set NAV_DLL_ACT 3
+	param set NAV_RCL_ACT 0
+	param set RTL_DESCEND_ALT 5
+	param set RTL_LAND_DELAY 5
+	param set RTL_RETURN_ALT 3
+	param set SDLOG_MODE 1
+	param set SDLOG_PROFILE 131
+	param set SDLOG_DIRS_MAX 7
+	param set SENS_BOARD_ROT 0
+	param set SENS_BOARD_X_OFF 0.000001
+	param set SENS_DPRES_OFF 0.001
+	param set SYS_HAS_BARO 0
+	param set SYS_HAS_MAG 0
+	param set SYS_HITL 2
+	param set SYS_RESTART_TYPE 2
+	param set TRIG_INTERFACE 3
+fi
+
+
+
+
+### ADAPT TIMEOUT PARAMETERS IF SIMULATION RUNS FASTER OR SLOWER THAN REALTIME.
+if [ ! -z $PX4_SIM_SPEED_FACTOR ]; then
+	COM_DL_LOSS_T_LONGER=$(echo "$PX4_SIM_SPEED_FACTOR * 10" | bc)
+	echo "COM_DL_LOSS_T set to $COM_DL_LOSS_T_LONGER"
+	param set COM_DL_LOSS_T $COM_DL_LOSS_T_LONGER
+
+	COM_RC_LOSS_T_LONGER=$(echo "$PX4_SIM_SPEED_FACTOR * 1" | bc)
+	echo "COM_RC_LOSS_T set to $COM_RC_LOSS_T_LONGER"
+	param set COM_RC_LOSS_T $COM_RC_LOSS_T_LONGER
+
+	COM_OF_LOSS_T_LONGER=$(echo "$PX4_SIM_SPEED_FACTOR * 10" | bc)
+	echo "COM_OF_LOSS_T set to $COM_OF_LOSS_T_LONGER"
+	param set COM_OF_LOSS_T $COM_OF_LOSS_T_LONGER
+fi
+
+
+
+
+### AUTOSTART ID
+autostart_file=''
+for f in etc/init.d-posix/"$(param show -q SYS_AUTOSTART)"_*
+do
+	filename=$(basename "$f")
+	case "$filename" in
+		*\.*)
+			;;
+		*)
+			autostart_file="$f"
+			;;
+	esac
+done
+if [ ! -e "$autostart_file" ]; then
+	echo "Error: no autostart file found ($autostart_file)"
+	exit 1
+fi
+
+sh "$autostart_file"
+
+
+
+
+### IF AUTOCONFIG PARAMETER WAS SET, RESET IT AND SAVE PARAMETERS.
+if [ $AUTOCNF = yes ]
+then
+	param set SYS_AUTOCONFIG 0
+fi
+
+
+
+
+### START SOFTWARE
+dataman start
+replay tryapplyparams
+simulator start -c $simulator_tcp_port
+tone_alarm start
+rc_update start
+sensors start
+commander start
+navigator start
+
+if ! param compare -s MNT_MODE_IN -1
+then
+	vmount start
+fi
+
+if param greater -s TRIG_MODE 0
+then
+	camera_trigger start
+	camera_feedback start
+fi
+
+
+
+
+### CONFIGURE VEHICLE TYPE SPECIFIC PARAMETERS.
+### NOTE: RC.VEHICLE_SETUP IS THE ENTRY POINT FOR RC.INTERFACE,
+###       RC.FW_APPS, RC.MC_APPS, RC.ROVER_APPS, AND RC.VTOL_APPS.
+sh etc/init.d/rc.vehicle_setup
+
+
+
+
+# QGROUNDCONTROL LINK
+mavlink start -x -u $udp_qgc_port_local -r 4000000
+mavlink stream -r 50 -s POSITION_TARGET_LOCAL_NED -u $udp_qgc_port_local
+mavlink stream -r 50 -s LOCAL_POSITION_NED -u $udp_qgc_port_local
+mavlink stream -r 50 -s GLOBAL_POSITION_INT -u $udp_qgc_port_local
+mavlink stream -r 50 -s ATTITUDE -u $udp_qgc_port_local
+mavlink stream -r 50 -s ATTITUDE_QUATERNION -u $udp_qgc_port_local
+mavlink stream -r 50 -s ATTITUDE_TARGET -u $udp_qgc_port_local
+mavlink stream -r 50 -s SERVO_OUTPUT_RAW_0 -u $udp_qgc_port_local
+mavlink stream -r 20 -s RC_CHANNELS -u $udp_qgc_port_local
+mavlink stream -r 10 -s OPTICAL_FLOW_RAD -u $udp_qgc_port_local
+
+
+
+
+### RUN SCRIPT TO START LOGGING
+sh etc/init.d/rc.logging
+
+
+
+
+### API/OFFBOARD LINKS
+mavlink start -x -u $udp_offboard_port_local -r 4000000 -m onboard -o $udp_offboard_port_remote
+
+if   [ "$GCS_1_URL" = "" ]; then
+	mavlink-routerd 0.0.0.0:$udp_offboard_port_remote -e 127.0.0.1:$PORT -e 127.0.0.1:$SDK_PORT
+elif [ "$GCS_2_URL" = "" ]; then
+	mavlink-routerd 0.0.0.0:$udp_offboard_port_remote -e 127.0.0.1:$PORT -e 127.0.0.1:$SDK_PORT -e $GCS_1_URL:$PORT -e $GCS_1_URL:$SDK_PORT
+elif [ "$GCS_3_URL" = "" ]; then
+	mavlink-routerd 0.0.0.0:$udp_offboard_port_remote -e 127.0.0.1:$PORT -e 127.0.0.1:$SDK_PORT -e $GCS_1_URL:$PORT -e $GCS_1_URL:$SDK_PORT -e $GCS_2_URL:$PORT -e $GCS_2_URL:$SDK_PORT
+elif [ "$GCS_4_URL" = "" ]; then
+	mavlink-routerd 0.0.0.0:$udp_offboard_port_remote -e 127.0.0.1:$PORT -e 127.0.0.1:$SDK_PORT -e $GCS_1_URL:$PORT -e $GCS_1_URL:$SDK_PORT -e $GCS_2_URL:$PORT -e $GCS_2_URL:$SDK_PORT -e $GCS_3_URL:$PORT -e $GCS_3_URL:$SDK_PORT
+elif [ "$GCS_5_URL" = "" ]; then
+	mavlink-routerd 0.0.0.0:$udp_offboard_port_remote -e 127.0.0.1:$PORT -e 127.0.0.1:$SDK_PORT -e $GCS_1_URL:$PORT -e $GCS_1_URL:$SDK_PORT -e $GCS_2_URL:$PORT -e $GCS_2_URL:$SDK_PORT -e $GCS_3_URL:$PORT -e $GCS_3_URL:$SDK_PORT -e $GCS_4_URL:$PORT -e $GCS_4_URL:$SDK_PORT
+else
+	mavlink-routerd 0.0.0.0:$udp_offboard_port_remote -e 127.0.0.1:$PORT -e 127.0.0.1:$SDK_PORT -e $GCS_1_URL:$PORT -e $GCS_1_URL:$SDK_PORT -e $GCS_2_URL:$PORT -e $GCS_2_URL:$SDK_PORT -e $GCS_3_URL:$PORT -e $GCS_3_URL:$SDK_PORT -e $GCS_4_URL:$PORT -e $GCS_4_URL:$SDK_PORT -e $GCS_5_URL:$PORT -e $GCS_5_URL:$SDK_PORT
+fi
+
+
+
+
+### EXECUTE AUTOSTART POST SCRIPT IF ANY
+[ -e "$autostart_file".post ] && sh "$autostart_file".post
+
+
+
+
+### END
+mavlink boot_complete
+replay trystart

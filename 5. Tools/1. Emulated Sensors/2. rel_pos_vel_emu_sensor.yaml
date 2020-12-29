@@ -1,0 +1,3 @@
+publishing_frequency : 50
+position_standard_deviation: 0.004
+velocity_standard_deviation: 0.004
